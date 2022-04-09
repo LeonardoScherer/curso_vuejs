@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 02 - Diretivas</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+</head>
+<body>
+    <!-- Diretivas o que são -->
+    <div id="app">
+        <h1> {{ titulo }} </h1>
+        <p> {{ texto }} </p>
+        <hr/>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data:  {
+                titulo: "Aula 02 - Diretivas",
+                texto: "Adicionado dentro de modelos. Executarão rotinas/tarefas, sempre iniciando em v-, indicando que é um atributo especial do Vue"
+            }
+        });
+    </script>
+
+    <!-- Diretivas v-if, v-show, v-else -->
+    <div id="app2">
+        <h2>v-if, v-show, v-else</h2>
+        <p v-if="status"> {{ texto }} </p>
+        <p v-else="status"> {{ textoFalso }} </p>
+        <p v-show="status">{{ show }}</p>
+        <hr/>
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: "#app2",
+            data:  {
+                status: true,
+                texto: "Trabalhando com v-if. Exibir apenas quando status for true",
+                textoFalso: "Trabalhando com v-else. Exibir quando if for false",
+                show: "v-show de forma parecida com v-if, mas com texto incluso no código, porém com display: none, quando false, usado com menu abre/fecha por exemplo."
+            }
+        });
+    </script>
+
+    <!-- Diretiva v-for -->
+    <div id="app3">
+        <h2>v-for</h2>
+        <ul>
+            <li v-for="item in linguagens"> {{ item.nome }} </li>
+        </ul>
+        <hr/>
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: "#app3",
+            data:  {
+                linguagens: [
+                    { nome: "PHP" },
+                    { nome: "JavaScript" },
+                    { nome: "Java" },
+                    { nome: "C#" },
+                ]
+            }
+        });
+    </script>
+
+    <!-- Diretiva v-model (usada em formularios...)-->
+    <div id="app4">
+        <h2>v-model</h2>
+        <label for="">Nome</label>
+        <input type="text" v-model="nome">
+        <br/><br/>
+
+        <label for="">Telefone</label>
+        <input type="text" v-model="telefone">
+        <br/><br/>
+
+        <label for="">Você está procurando emprego?</label>
+        <input type="radio" value="Sim" v-model="emprego">Sim 
+        <input type="radio" value="Não" v-model="emprego">Não <br/><br/>
+
+        <label for="">Hard Skills</label>
+        <br/>
+        <input type="checkbox" value="PHP" v-model="hardskills"> PHP <br/>
+        <input type="checkbox" value="JavaScript" v-model="hardskills"> JavaScript <br/>
+        <input type="checkbox" value="Java" v-model="hardskills"> Java <br/>
+        <input type="checkbox" value="C#" v-model="hardskills"> C# <br/>
+        <br/><br/>
+
+        <label for="">Formação</label>
+        <select v-model="formacao">
+            <option value="Ensino superior concluído">Ensino superior concluído</option>
+            <option value="Ensino superior em andamento">Ensino superior em andamento</option>
+            <option value="Ensino técnico concluído">Ensino técnico concluído</option>
+            <option value="Ensino técnico em andamento">Ensino técnico em andamento</option>
+            <option value="Outro">Outro</option>
+        </select>
+
+        <br/><br/>
+        <p>Dados</p>
+        Nome: {{ nome }} <br/>
+        Telefone: {{ telefone }} <br/>
+        Em busca de emprego: {{ emprego }} <br/>
+        Hard Skills: {{ hardskills }} <br/>
+        Formação: {{ formacao }} <br/>
+
+        <hr/>
+
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: "#app4",
+            data: {
+                nome: "",
+                telefone: "",
+                emprego: "",
+                hardskills: [],
+                formacao: ""
+            }
+        });
+    </script>
+
+    <!-- Diretiva v-bind (atribuindo valores a tags html) podendo utilizar como v-bind: ou apenas : -->
+    <div id="app5">
+        <h2>v-bind</h2>
+        <img v-bind:src="imagem" :alt="alt">
+        <hr/>
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: "#app5",
+            data: {
+                imagem: "https://br.vuejs.org/images/logo.png",
+                alt: "Logo VueJs",
+            }
+        });
+    </script>
+
+    <!-- Diretiva v-bind (atribuindo valores em class e style) -->
+    <div id="app6">
+        <h2>v-bind</h2>
+        <button class="btn" v-bind:class="btnClassLimpar" :style="btnStyleLimpar">Limpar</button>
+        <button class="btn" v-bind:class="btnClassEnviar" :style="btnStyleEnviar">Enviar</button>
+        <hr/>
+
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: "#app6",
+            data: {
+                btnClassLimpar: {
+                    'btn-danger': true,
+                    'btn-sm': true,
+                },
+                btnClassEnviar: [
+                    'btn-primary', 'btn-sm',
+                ],
+                btnStyleLimpar:[ 
+                    {'font-size': '40px'},
+                    {'text-transform': 'lowercase'}
+                ],
+                btnStyleEnviar: {
+                    'font-size': '20px'
+                },
+            }
+        });
+    </script>
+
+    <!-- Diretiva v-on, pode ser usado como v-on: ou apenas @-->
+    <div id="app7">
+        <h2>v-on</h2>
+        <form action="http://google.com">
+            <button type="submit" class="btn btn-primary" @click.prevent.stop="enviar()">Enviar</button>
+        </form>
+        <hr/>
+
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: "#app7",
+            data: {
+            },
+            methods: {
+                enviar() {
+                    alert('Enviado!');
+                },
+
+            }
+        });
+    </script>
+
+
+</body>
+</html>
