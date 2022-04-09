@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <title>Aula 03 - Filters</title>
+</head>
+<body>
+    <div id="app">
+        <h1>{{ titulo }}</h1>
+        <p>{{ text }}</p>
+        <ul>
+            <li v-for="usuario in usuarios">
+                {{ usuario.nome | truncate('5') }}
+            </li>
+        </ul>
+
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                titulo: "Filters",
+                text: "Trabalhando com filtros",
+                usuarios: [
+                    { nome: 'Eren Jaeger' },
+                    { nome: 'Mikasa Ackerman' },
+                    { nome: 'Levi Ackerman' }
+                ]
+            },
+
+            filters: {
+                toUpperCase(str) {
+                    return str.toUpperCase();
+                },
+
+                truncate(str, length) {
+                    var output = str;
+                    if (output.length > length) {
+                        output = str.substring(0, length) + ' ...';
+                    }
+                    return output;
+                }
+            },
+
+        })
+    </script>
+</body>
+</html>
