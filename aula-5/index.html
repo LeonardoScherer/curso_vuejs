@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <title>Aula 05 - Lifecycle hooks</title>
+</head>
+<body>
+    <div id="app">
+        <h1>{{ titulo }}</h1>
+        <a href="https://vuejs.org/guide/essentials/lifecycle.html#lifecycle-diagram">lifecycle-diagram</a>
+
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: "#app",
+
+            beforeCreate() {
+                console.log('beforeCreate');
+            },
+
+            created() {
+                console.log('created');
+            },
+
+            beforeMount() {
+                console.log('beforeMount');
+            },
+
+            mounted() {
+                console.log('mounted');
+            },
+
+            beforeUpdate() {
+                console.log('beforeUpdate');
+            },
+
+            updated() {
+                console.log('updated');
+            },
+
+            /* beforeDestroy() {},
+            destroyed() {}, */
+
+            data: {
+                titulo: "Lifecycle hooks",
+                image: "https://vuejs.org/assets/lifecycle.16e4c08e.png",
+            },
+
+
+
+        })
+    </script>
+</body>
+</html>
