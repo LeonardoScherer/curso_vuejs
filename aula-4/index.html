@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <title>Aula 04 - Computed e watch</title>
+</head>
+<body>
+    <div id="app">
+        <h1>{{ titulo }}</h1>
+        {{ nome }} <br/>
+        {{ toUpperCase }}
+        <hr>
+        <p>Full Name computed</p>
+        {{ fullName }}
+
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                titulo: "Computed e Watch",
+                nome: 'Eren Jaeger',
+                firstName: "",
+                lastName: "",
+            },
+
+            /* Se variaveis forem alteradas, roda computed novamente */
+            computed: {
+                toUpperCase() {
+                    return this.nome.toUpperCase()
+                },
+
+                fullName() {
+                    return this.firstName + ' ' + this.lastName;
+                }
+            },
+
+            /* Observa alteração nas var */
+            watch: {
+                nome(newValue, oldValue) {
+                    console.log('newValue', newValue);
+                    console.log('oldValue', oldValue);
+                },
+
+                firstName(newValue) {
+                    this.updateUser();
+                },
+            },
+
+            methods: {
+                updateUser() {
+                    console.log('Usúario atualizado :p')
+                }
+            }
+
+        })
+    </script>
+</body>
+</html>
