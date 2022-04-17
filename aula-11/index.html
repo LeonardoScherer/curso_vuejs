@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Aula 11 - Atributos especiais (key, ref, slot, is)</title>
+</head>
+<body>
+   <div id="app">
+        <h1> {{ titulo }} </h1>
+
+        <component v-bind:is="movie"></component>
+        <!-- <transformers v-if="movie == 'transformers'"></transformers> -->
+        
+        <ul ref="users">
+            <li v-for="(item, index) in users" :key="item.name">{{ item.name }}<a @click.prevent.stop="remove(index)" style="cursor: pointer;"> x</a> </li>
+        </ul>
+    </div>
+
+    <template id="transformers">
+        <div>
+            <h4>Transformers</h4>
+            <ul>
+                <li v-for="item in transformers">{{ item.name }}</li>
+            </ul>
+        </div>
+    </template>
+
+
+<script>
+    Vue.component('transformers', {
+        template: '#transformers',
+        data() {
+            return {
+                transformers: [
+                    { name: 'teste' },
+                    { name: 'teste 2' },
+                ]
+            }
+        },
+    });
+
+    var app = new Vue({
+        el: "#app",
+
+        mounted() {
+            console.log(this.$refs)
+        },
+        
+        data:  {
+            titulo: "Aula 11 - Atributos especiais (key, ref, slot, is)",
+            users: [
+                { name: 'Fulano' },
+                { name: 'Beltrano' },
+                { name: 'Cicrano' },
+            ],
+            movie: 'transformers',
+           /* movie: '', */
+        },
+
+        methods: {
+            remove(index) {
+                this.users.splice(index, 1);
+            }
+        }
+        
+    });
+</script>
+</body>
+</html>
