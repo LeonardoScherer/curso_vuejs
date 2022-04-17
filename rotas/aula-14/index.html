@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router@2.0.0/dist/vue-router.js"></script>
+    <style>
+        .fade-enter-active, .fade-leave-active {
+            transition: opacity .5s;
+        }
+        .fade-enter, .fade-leave-to {
+            opacity: 0;
+        }
+    </style>
+    <title>Aula 14 - History mode e rotas nomeadas </title>
+</head>
+<body>
+   <div id="app">
+        <h1> {{ titulo }} </h1>
+
+        <ul>
+            <li> <router-link v-bind:to="{ name: 'transformers' }">Transformers</router-link> </li>
+            <li> <router-link v-bind:to="{ name: 'gameOfThrones' }">Game of Thrones</router-link> </li>
+        </ul>
+        <hr>
+
+        <router-view></router-view>
+        
+    </div>
+
+    <template id="transformers">
+        <div>
+            <h4>Transformers</h4>
+            <ul>
+                <li v-for="item in transformers">{{ item.name }}</li>
+            </ul>
+        </div>
+    </template>
+
+    <template id="gameOfThrones">
+        <div>
+            <h4>Game of Thrones</h4>
+            <ul>
+                <li v-for="item in gameOfThrones">{{ item.name }}</li>
+            </ul>
+        </div>
+    </template>
+
+
+<script>
+    var Transformers = Vue.component('transformers', {
+        template: '#transformers',
+        data() {
+            return {
+                transformers: [
+                    { name: 'teste' },
+                    { name: 'teste 2' },
+                ]
+            }
+        },
+    });
+
+    var GameOfThrones = Vue.component('game-of-thrones', {
+        template: '#gameOfThrones',
+        data() {
+            return {
+                gameOfThrones: [
+                    { name: 'Jon' },
+                    { name: 'Daenerys' },
+                    { name: 'Tyon' },
+                ]
+            }
+        },
+    });
+
+    var router = new VueRouter({
+        mode: 'history',
+        routes: [
+            { path: '/transformers', name: 'transformers', component: Transformers},
+            { path: '/game-of-thrones', name: 'gameOfThrones', component: GameOfThrones},
+        ]
+    });
+
+    var app = new Vue({
+        el: "#app",
+
+        router,
+        
+        data:  {
+            titulo: "Aula 14 - History mode e rotas nomeadas",
+        },
+        
+    });
+</script>
+</body>
+</html>
