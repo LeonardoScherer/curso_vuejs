@@ -8,20 +8,24 @@
     <div class="row">
       <div class="col">
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="Github username">
+          <input v-model="username" type="text"
+            class="form-control" placeholder="Github username">
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="Github repositório">
+          <input v-model="repository" type="text"
+            class="form-control" placeholder="Github repositório">
         </div>
       </div>
 
       <div class="col-3">
         <div class="form-group">
-          <button class="btn btn-success">Pesquisar</button>
-          <button class="btn btn-danger">Limpar</button>
+          <button @click.prevent.stop="getIssues()"
+            class="btn btn-success">Pesquisar</button>
+          <button @click.prevent.stop="reset()"
+            class="btn btn-danger">Limpar</button>
         </div>
       </div>
     </div>
@@ -37,7 +41,12 @@
       </thead>
 
       <tbody>
-        <tr>
+        <tr v-if="!!issues.length" v-for="issue in issues" :key="issue.number">
+          <td>{{ issue.number }}</td>
+          <td>{{ issue.title }}</td>
+        </tr>
+
+        <tr v-if="!!!issues.length">
           <td class="text-center" colspan="2">Nenhuma issue encontrada!</td>
         </tr>
       </tbody>
@@ -46,15 +55,34 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'GitHubIssues',
 
   data() {
     return {
+      username: '',
+      repository: '',
+      issues: [],
     };
   },
 
-  methods: {},
+  methods: {
+    reset() {
+      this.username = '';
+      this.repository = '';
+    },
+
+    getIssues() {
+      if (this.username && this.repository) {
+        const url = `https://api.github.com/repos/${this.username}/${this.repository}/issues`;
+        axios.get(url).then((response) => {
+          this.issues = response.data;
+        });
+      }
+    },
+  },
 };
 </script>
 
